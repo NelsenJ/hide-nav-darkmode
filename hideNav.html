@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidenav</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+        })
+    </script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .circle{
+            width: 50px;
+            height: 50px;
+            background-color: plum;
+            cursor: pointer;
+            transform: skewX(-20deg);
+            transform: skewY(-30deg);
+        }
+        nav{
+            display: flex;
+            position: relative;
+            justify-content: space-between;
+            align-items: center;
+            padding:  0px 20px;
+            height: 80px;
+            background-color: pink;
+            flex-direction: row;
+        }
+        ul{
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 20px;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        li{
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        @media screen and (max-width: 576px) {
+            ul{
+                position: absolute;
+                right: 0px;
+                top: 80px;
+                background-color: palevioletred;
+                display: none;
+                height: calc(100vh - 80px);
+                flex-direction: column;
+                gap: 50px;
+                width: 250px;
+                padding-top: 50px
+            }
+            ul.show{
+                display: flex;
+            }
+            ul li{
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                background-color: white;
+                border-bottom: 3px solid black;
+            }
+            ul li a{
+                display: block;
+                font-size: 24px;
+            }
+            ul li:nth-child(odd) a::before{
+                content: "❤️";
+            }
+            ul li:nth-child(even) a::before{
+                content: "☀️";
+            }
+            ul li:nth-child(3) a::before{
+                content: "🌍";
+            }
+
+            ul.dark li:nth-child(odd) a::before{
+                content: "💝";
+            }
+            ul.dark li:nth-child(even) a::before{
+                content: "🌙";
+            }
+            ul.dark li:nth-child(3) a::before{
+                content: "🗺️";
+            }
+
+            ul.dark{
+            background-color: rgb(0, 128, 255);
+            }
+
+            ul.dark li{
+                background-color: black;
+                border-bottom: 3px solid white;
+            }
+            .menu-icon{
+                display: block;
+            }
+        }
+        @media screen and (min-width: 576px){
+            ul{
+                display: inline-block;
+            }
+            .menu-icon{
+                display: none;
+            }
+        }
+        
+        div.menu-icon{
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        div.menu-icon span{
+            display: block;
+            width: 40px;
+            height: 5px;
+            background-color: black ;
+            margin: 0px auto;
+            margin-bottom: 8px;
+        }
+
+
+        body.dark{
+            background-color: black;
+        }
+        div.circle.dark{
+            background-color: blue;
+            transform: skewX(20deg);
+            transform: skewY(30deg);
+        }
+
+        nav.dark{
+            background-color: rgb(45, 197, 197);
+        }
+        div.menu-icon.dark span{
+            background-color: whitesmoke;
+        }
+
+
+        ul.dark li a{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="circle">
+
+            </div>
+            <ul id="menu">
+                <li id="li">
+                    <a href="#">Home</a>
+                </li>
+                <li id="li">
+                    <a href="#">about</a>
+                </li>
+                <li id="li">
+                    <a href="#">profile</a>
+                </li>
+            </ul>
+
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+        </nav>
+    </header>
+</body>
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector(".menu-icon").addEventListener('click', () => {
+            document.getElementById("menu").classList.toggle('show')
+            localStorage.setItem('show', !showInfo)
+            })
+            let showInfo;
+            if(!localStorage.getItem('show')){
+                localStorage.setItem('show', false);
+            }
+            showInfo = JSON.parse(localStorage.getItem('show'));
+            if(showInfo){
+                document.getElementById("menu").classList.toggle('show');
+            }
+            document.querySelector(".circle").addEventListener('click', () => {
+                document.querySelector("body").classList.toggle('dark');
+                document.querySelector("div").classList.toggle('dark');
+                
+                document.querySelector("ul").classList.toggle('dark');
+                document.querySelector("nav").classList.toggle('dark');
+                document.querySelector(".menu-icon").classList.toggle('dark');
+                localStorage.setItem('dark', !darkInfo)
+            })
+            let darkInfo;
+            if(!localStorage.getItem('dark')){
+                localStorage.setItem('dark', false);
+            }
+            darkInfo = JSON.parse(localStorage.getItem('dark'));
+            if(darkInfo){
+                document.querySelector("body").classList.toggle('dark');
+                document.querySelector("div").classList.toggle('dark');
+                document.getElementById("li").classList.toggle('dark');
+                document.querySelector("ul").classList.toggle('dark');
+                document.querySelector("nav").classList.toggle('dark');
+                document.querySelector(".menu-icon").classList.toggle('dark');
+            }
+        })
+
+</script>
+</html>
